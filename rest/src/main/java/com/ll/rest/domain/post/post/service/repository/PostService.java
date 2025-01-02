@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +26,22 @@ public class PostService {
                 build();
         return this.postRepository.save(post);
         //insert into post(created_at,modified_at,content,title) values(?,?,?,?);
+    }
+
+    public List<Post> findAllByOrderByIdDesc() {
+        return postRepository.findAllByOrderByIdDesc();
+    }
+
+    public Optional<Post> findById(Long id) {
+        return this.postRepository.findById(id);
+    }
+
+    public void delete(Post post) {
+        this.postRepository.delete(post);
+    }
+
+    public void modify(Post post, String title, String content) {
+        post.setTitle(title);
+        post.setContent(content);
     }
 }
