@@ -44,4 +44,12 @@ public class PostService {
         post.setTitle(title);
         post.setContent(content);
     }
+
+    public Post create(String title, String content) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setContent(content);
+        this.postRepository.save(post);
+        return post;
+    }
 }
