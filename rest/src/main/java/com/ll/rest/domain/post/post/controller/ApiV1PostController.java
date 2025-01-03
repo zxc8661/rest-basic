@@ -68,7 +68,9 @@ public class ApiV1PostController {
 
 
 
-        return new RsData("200-1","%d번 글을 수정 하였습니다.".formatted(id));
+        return new RsData("200-1"
+                ,"%d번 글을 수정 하였습니다.".formatted(id)
+                ,new PostDto(post));
     }
 
 
@@ -91,8 +93,10 @@ public class ApiV1PostController {
         Post post =this.postService.create( reqBody.title, reqBody.content);
 
 
-
-        return new RsData("200-1","%d번 글이 작성되었습니다.".formatted(post.getId()));
+        return new RsData("200-1",
+                "%d번 글이 작성되었습니다.".formatted(post.getId()),
+                post.getId()
+        );
     }
 
 }

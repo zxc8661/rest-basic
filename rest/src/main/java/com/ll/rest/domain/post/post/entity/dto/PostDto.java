@@ -1,6 +1,7 @@
 package com.ll.rest.domain.post.post.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ll.rest.domain.post.post.entity.Post;
 
 import com.ll.rest.global.jpa.entity.BaseTime;
@@ -13,9 +14,9 @@ import java.time.LocalDateTime;
 public class PostDto {
 
     private Long id;
-    @JsonIgnore
+    @JsonProperty("createdDatetime")
     private LocalDateTime createDate;
-    @JsonIgnore
+    @JsonProperty("modifiedDatetime")
     private LocalDateTime modifyDate;
     private String title;
     private String content;
@@ -29,10 +30,6 @@ public class PostDto {
         this.content = post.getContent();
     }
 
-    public LocalDateTime getCreatedDatetime() {
-        return createDate;
-    }
-    public LocalDateTime getModifiedDatetime() {
-        return modifyDate;
-    }
+
+
 }
