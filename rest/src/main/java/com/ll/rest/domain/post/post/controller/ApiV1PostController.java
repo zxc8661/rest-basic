@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -39,17 +41,19 @@ public class ApiV1PostController {
     }
 
     @DeleteMapping("/{id}")
-    public RsData<Void> deleteItem(@PathVariable("id") Long id){
+    public RsData<Void>  deleteItem(@PathVariable("id") Long id){
          Post post = this.postService.findById(id).get();
 
          this.postService.delete(post);
 
 
 
-         return new RsData<Void>(
-                 "200-1",
-                 "%d번 글을 삭제 하였습니다.".formatted(id)
-         );
+        return new RsData<>(
+                "200-1",
+                "%d번 글이 삭제되었습니다.".formatted(id)
+        );
+
+
     }
     record PostModifyReqBody(
             @NotBlank
@@ -93,7 +97,7 @@ public class ApiV1PostController {
     }
 
     @PostMapping
-    public RsData<PostWriteResBody> CreateItem(
+    public RsData<PostWriteResBody> writeItem(
                              @RequestBody @Valid PostWriteReqBody reqBody){
 
 
@@ -101,14 +105,17 @@ public class ApiV1PostController {
         Post post =this.postService.create( reqBody.title, reqBody.content);
 
 
-        return new RsData<>("200-1",
-                "%d번 글이 작성되었습니다.".formatted(post.getId())
-                ,new PostWriteResBody(
+        return new RsData<>(
+                "201-1",
+                "%d번 글이 작성되었습니다.".formatted(post.getId()),
+                new PostWriteResBody(
                         new PostDto(post),
-                        this.postService.count()
+                        postService.count()
                 )
         );
     }
+
+
 
 }
 
